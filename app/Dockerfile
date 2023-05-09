@@ -27,8 +27,8 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # add and run as non-root user
-RUN adduser -D myuser
-USER myuser
+RUN adduser -D oem
+USER oem
 
 # run gunicorn
 CMD gunicorn pet_store_docker.wsgi:application --bind 0.0.0.0:$PORT
