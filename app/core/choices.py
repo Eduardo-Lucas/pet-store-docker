@@ -37,3 +37,16 @@ class UnidadeFederativa(models.TextChoices):
 class Sexo(models.TextChoices):
     Macho = 'Macho'
     Fêmea = 'Fêmea'
+
+
+class TipoConsulta(models.TextChoices):
+    Consulta = 'Consulta'
+    Exame = 'Exame'
+
+
+class FormaPagamento(models.TextChoices):
+    Dinheiro = ''
+    CARTAO_CREDITO = 'Cartão de Crédito'
+    CARTAO_DEBITO = 'Cartão de Débito'
+    PIX = 'Pix'
+ 

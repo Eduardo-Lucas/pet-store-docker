@@ -1,0 +1,85 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container mb-3 mt-3">
+      <div class="row">
+        <div class="col-4 mt-3"><h1>Lista de Veterinários</h1></div>
+        <div class="col-4 mt-4" >
+            <a href="{% url 'veterinario:veterinario_create' %}"
+            class="btn btn-outline-success"
+          >
+            <i class="fa-solid fa-circle-plus"></i> Adiciona Novo
+          </a>
+        </div>        
+      </div>
+
+  <table
+    class="table table-striped table-bordered table-hover"
+    style="width: 100%"
+  >
+    <thead class="border-bottom font-weight-bold">
+      
+      <tr>
+        <td>Nome</td>
+        <td>Celular</td>
+        <td>E-mail</td>
+        <td>Nome da Clínica</td>
+      </tr>
+    
+    </thead>
+    
+    <tbody>
+      {% for veterinario in veterinarios %}
+
+      <tr>
+        <td>{{ veterinario.nome }}</td>
+        <td>{{ veterinario.celular }}</td>
+        <td>{{ veterinario.email }}</td>
+        <td>{{ veterinario.nome_clinica }}</td>
+
+        <td class="text-center">
+          <a
+            href="{% url 'veterinario:veterinario_detail' veterinario.id %}"
+            class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Dodgerblue;">
+            <i class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes"></i>
+          </span>
+          </a>
+        </td>
+        <td class="text-center">
+          <a
+            href="{% url 'veterinario:veterinario_update' veterinario.id %}"
+            class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Mediumslateblue;">
+            <i class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Atualizar"></i>
+          </span>
+          </a>
+          </td>
+          <td class="text-center">
+          <a
+            href="{% url 'veterinario:veterinario_delete' veterinario.id %}"
+              class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Tomato;">
+            <i class="fa-solid fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir"></i>
+          </span>
+          </a>
+          </td>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+    <tfoot class="border-bottom font-weight-bold">
+      <tr>
+        <td>Nome</td>
+        <td>Celular</td>
+        <td>E-mail</td>
+        <td>Nome da Clínica</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+{% endblock %}

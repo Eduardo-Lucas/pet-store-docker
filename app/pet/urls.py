@@ -1,12 +1,12 @@
 from django.urls import path
-from especie.views import *
+from pet.views import *
 
-app_name = 'especie'
+app_name = 'pet'
 
 urlpatterns = [
-    path('list/', EspecieListView.as_view(), name='especie_list'),
-    path('create/', EspecieCreateView.as_view(), name='especie_create'),
-    path('detail/<pk>', EspecieDetailView.as_view(), name='especie_detail'),
-    path('update/<pk>', EspecieUpdateView.as_view(), name='especie_update'),
-    path('delete/<pk>', EspecieDeleteView.as_view() , name='especie_delete'),
+    path('list/', PetListView.as_view(), name='pet_list'),
+    path('create/', PetCreateView.as_view(), name='pet_create'),
+    path('detail/<pk>', PetDetailView.as_view(), name='pet_detail'),
+    path('update/<pk>', PetUpdateView.as_view(), name='pet_update'),
+    path('delete/<pk>', PetDeleteView.as_view() , name='pet_delete'),
 ]

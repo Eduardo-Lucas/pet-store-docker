@@ -1,5 +1,7 @@
 import uuid
 from django.db import models
+# from especie.models import Especie
+from raca.models import Raca
 
 from core.choices import Sexo
 from tutor.models import Tutor
@@ -13,7 +15,7 @@ class Pet(models.Model):
     tutor = models.ForeignKey(Tutor, db_index=True, on_delete=models.PROTECT, 
                               related_name='meu_dono')
     nome = models.CharField(max_length=100)
-    # raca = models.ForeignKey(Raca, on_delete=models.PROTECT)
+    raca = models.ForeignKey(Raca, on_delete=models.PROTECT)
     # especie = models.ForeignKey(Especie, on_delete=models.PROTECT) 
     sexo = models.CharField(max_length=10, choices=Sexo.choices)
     idade = models.IntegerField(default=0)
