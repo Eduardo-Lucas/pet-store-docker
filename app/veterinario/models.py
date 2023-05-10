@@ -20,7 +20,7 @@ class Veterinario(models.Model):
     nome = models.CharField(max_length=100)
     nome_clinica = models.CharField(max_length=100, null=True, blank=True)
     celular = models.CharField(max_length=14, null=True, blank=True)
-    created_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         db_table = "veterinarios"

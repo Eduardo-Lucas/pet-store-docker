@@ -35,7 +35,7 @@ class Tutor(models.Model):
         default="RJ",
     )
     observacao = models.CharField(max_length=200, null=True, blank=True)
-    created_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         db_table = "tutores"

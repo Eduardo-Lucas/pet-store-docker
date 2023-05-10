@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # apps
-    "consulta",
     "core",
-    # 'especie',
+    "especie",
     "pet",
     "raca",
     "tutor",
