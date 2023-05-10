@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 from core.choices import Sexo
-from tutor.models import Tutor
+from users.models import Tutor
 
 
 class Especie(models.Model):

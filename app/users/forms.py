@@ -4,8 +4,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from .models import User
-from tutor.models import Tutor
-from veterinario.models import Veterinario
+from .models import Tutor
+from .models import Veterinario
 
 
 User = get_user_model()

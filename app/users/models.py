@@ -1,9 +1,11 @@
 # import the required libraries
+import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.urls import reverse
 from core.choices import UnidadeFederativa
+
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
@@ -14,7 +16,8 @@ class User(AbstractUser):
         return self.email
 
     class Meta:
-        db_table = "user"
+        db_table = "users"
+
 
 class Veterinario(models.Model):
     id = models.UUIDField(
