@@ -17,7 +17,7 @@ class Especie(models.Model):
         return self.nome
     
     def get_absolute_url(self):
-        return reverse("especie:especie_detail", kwargs={"pk": self.id})    
+        return reverse("pet:especie_detail", kwargs={"pk": self.id})    
 
     
     class Meta:
@@ -38,7 +38,7 @@ class Raca(models.Model):
         return self.nome
     
     def get_absolute_url(self):
-        return reverse("raca:raca_detail", kwargs={"pk": self.id})    
+        return reverse("pet:raca_detail", kwargs={"pk": self.id})    
 
 
 
