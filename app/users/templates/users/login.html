@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    <form action="{% url 'login' %}" method="POST">
-      {% csrf_token %} {{ form.as_p }}
-      <input type="submit" value="Login" />
-    </form>
-    <p>Não é registrado ainda!</p>
-    <a href="{% url 'tutor-signup' %}">Registre-se como Tutor</a><br />
-    <a href="{% url 'veterinarian-signup' %}">Registre-se como Veterinário</a>
-  </body>
-</html>
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% load static %} 
+
+{% block content %}
+
+<h1>Login</h1>
+<form action="{% url 'users:login' %}" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="Login" />
+</form>
+<p>Não é registrado ainda!</p>
+<a href="{% url 'users:tutor-signup' %}">Registre-se como Tutor</a><br />
+<a href="{% url 'users:veterinarian-signup' %}">Registre-se como Veterinário</a>
+{% endblock %}

@@ -36,7 +36,7 @@ class VeterinarianSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect("veterinarian-home")
+        return redirect("users:veterinarian-home")
 
 
 class LoginView(auth_views.LoginView):
@@ -50,17 +50,21 @@ class LoginView(auth_views.LoginView):
         user = self.request.user
         if user.is_authenticated:
             if user.is_tutor:
-                return reverse("tutor-home")
+                return reverse("users:tutor-home")
             elif user.is_veterinarian:
-                return reverse("veterinarian-home")
+                return reverse("users:veterinarian-home")
         else:
-            return reverse("login")
+            return reverse("users:login")
+
+
+class LogoutView(auth_views.LogoutView):
+    template_name = "users/logout.html"
 
 
 @login_required
 @tutor_required
 def tutor_home(request):
-    context = {"questions": "Wlecome to Tutor's Home"}
+    context = {"questions": "Welcome to Tutor's Home"}
     return render(request, "users/tutor_home.html", context)
 
 
