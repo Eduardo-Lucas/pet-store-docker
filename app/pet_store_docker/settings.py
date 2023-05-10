@@ -43,9 +43,7 @@ INSTALLED_APPS = [
     # apps
     "core",
     "pet",
-    "tutor",
     "users",
-    "veterinario",
     # third party libraries
     "crispy_forms",
     "crispy_bootstrap5",
