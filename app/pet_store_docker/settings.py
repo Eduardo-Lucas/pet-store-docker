@@ -51,7 +51,10 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "django_bootstrap5",
+    "smart_selects",
 ]
+
+USE_DJANGO_JQUERY = True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

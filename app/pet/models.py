@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.urls import reverse
 
+from smart_selects.db_fields import ChainedForeignKey
 
 from core.choices import Sexo
 from users.models import Tutor
@@ -46,7 +47,16 @@ class Pet(models.Model):
     )
     nome = models.CharField(max_length=100)
     especie = models.ForeignKey(Especie, on_delete=models.PROTECT)
-    raca = models.ForeignKey(Raca, on_delete=models.PROTECT)
+
+    raca = ChainedForeignKey(
+        Raca,
+        chained_field="especie",
+        chained_model_field="especie",
+        show_all=False,
+        auto_choose=True,
+        sort=True
+    )
+    
     sexo = models.CharField(max_length=10, choices=Sexo.choices)
     idade = models.IntegerField(default=0)
     observacao = models.CharField(max_length=200, null=True, blank=True)

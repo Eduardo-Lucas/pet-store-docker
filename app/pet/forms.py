@@ -6,4 +6,3 @@ class PetForm(forms.ModelForm):
     class Meta:
         model = Pet
         fields = ("nome", "especie", "raca", "sexo", "idade", "observacao")
-

@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
+from pet.forms import PetForm
 
 from pet.models import Pet
 from .models import User
@@ -66,8 +67,14 @@ class LogoutView(auth_views.LogoutView):
 @login_required
 @tutor_required
 def tutor_home(request):
-    context = {"pets": Pet.objects.filter(tutor=request.user.tutor)}
-    return render(request, "users/tutor_home.html", context)
+    if request.method == 'POST':
+        form = PetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Handle form submission
+    else:
+        form = PetForm()
+    return render(request, "users/tutor_home.html", {"form": form})
 
 
 @login_required
