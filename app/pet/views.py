@@ -6,16 +6,11 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 from pet.models import Pet, Raca
 from pet.forms import PetForm
 
-
-def load_racas(request):
-    especie_id = request.GET.get('especie')
-    racas = Raca.objects.filter(especie_id=especie_id).order_by('nome')
-    return render(request, 'pet/dropdown_list.html', {'racas': racas})
 
 class PetListView(ListView):
     model = Pet
@@ -31,6 +26,14 @@ class PetCreateView(CreateView):
     template_name = "pet/pet_form.html"
     form_class = PetForm
 
+    success_url = reverse_lazy('users:tutor-home')
+
+    def form_valid(self, form):
+        pet = form.save(commit=False)
+        pet.tutor = self.request.user.tutor
+        pet.save()
+        return super(PetCreateView, self).form_valid(form)
+
 
 class PetDetailView(DetailView):
     model = Pet
@@ -38,14 +41,14 @@ class PetDetailView(DetailView):
 
 class PetUpdateView(UpdateView):
     model = Pet
-    fields = [
-        "nome",
-    ]
+    template_name = "pet/pet_form.html"
+    form_class = PetForm
 
+    success_url = reverse_lazy("users:tutor-home")
 
 class PetDeleteView(DeleteView):
     model = Pet
-    success_url = reverse_lazy("pet:pet_list")
+    success_url = reverse_lazy("users:tutor-home")
 
 
 class RacaCreateView(CreateView):

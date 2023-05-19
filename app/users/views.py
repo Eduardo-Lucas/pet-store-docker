@@ -67,14 +67,10 @@ class LogoutView(auth_views.LogoutView):
 @login_required
 @tutor_required
 def tutor_home(request):
-    if request.method == 'POST':
-        form = PetForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Handle form submission
-    else:
-        form = PetForm()
-    return render(request, "users/tutor_home.html", {"form": form})
+    context = {
+        "pets": Pet.objects.filter(tutor=request.user.tutor).order_by('nome')
+    }
+    return render(request, "users/tutor_home.html", context)
 
 
 @login_required
