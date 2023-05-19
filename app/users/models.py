@@ -41,8 +41,6 @@ class Veterinario(models.Model):
     def __str__(self) -> str:
         return self.nome
 
-    def get_absolute_url(self):
-        return reverse("veterinario:veterinario_detail", kwargs={"pk": self.id})
 
 
 class Tutor(models.Model):
@@ -80,9 +78,6 @@ class Tutor(models.Model):
 
     def __str__(self) -> str:
         return self.nome
-
-    def get_absolute_url(self):
-        return reverse("tutor:tutor_detail", kwargs={"pk": self.id})
 
     # @property
     # def quantidade_de_pets(self) -> int:

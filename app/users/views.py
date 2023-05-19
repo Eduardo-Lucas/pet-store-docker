@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
+
+from pet.models import Pet
 from .models import User
 from .forms import TutorSignUpForm, VeterinarianSignUpForm, LoginForm
 from django.contrib.auth import login
@@ -21,7 +23,7 @@ class TutorSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect("tutor-home")
+        return redirect("users:tutor-home")
 
 
 class VeterinarianSignUpView(CreateView):
@@ -64,7 +66,7 @@ class LogoutView(auth_views.LogoutView):
 @login_required
 @tutor_required
 def tutor_home(request):
-    context = {"questions": "Welcome to Tutor's Home"}
+    context = {"pets": Pet.objects.filter(tutor=request.user.tutor)}
     return render(request, "users/tutor_home.html", context)
 
 

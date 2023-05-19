@@ -3,7 +3,10 @@ version: '3.3'
 services:
   web:
     build: ./app
-    command: python manage.py runserver 0.0.0.0:8010
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8010"
     volumes:
       - ./app/:/usr/src/app/
     ports:
@@ -20,6 +23,8 @@ services:
       - POSTGRES_USER=pet_store_docker
       - POSTGRES_PASSWORD=pet_store_docker
       - POSTGRES_DB=pet_store_docker_dev
+    ports:
+      - "5457:5432"  
 
 volumes:
   postgres_data:

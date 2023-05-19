@@ -8,9 +8,6 @@ from users.models import Tutor
 
 
 class Especie(models.Model):
-    id = models.UUIDField(
-        primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
-    )
     nome = models.CharField(max_length=100)
 
     def __str__(self) -> str:
@@ -26,11 +23,8 @@ class Especie(models.Model):
 
 
 class Raca(models.Model):
-    id = models.UUIDField(
-        primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
-    )
     nome = models.CharField(max_length=100, unique=True, db_index=True)
-
+    especie = models.ForeignKey(Especie, on_delete=models.CASCADE)
     class Meta:
         db_table = 'raca'
 
@@ -51,8 +45,8 @@ class Pet(models.Model):
         Tutor, db_index=True, on_delete=models.PROTECT, related_name="meu_dono"
     )
     nome = models.CharField(max_length=100)
-    raca = models.ForeignKey(Raca, on_delete=models.PROTECT)
     especie = models.ForeignKey(Especie, on_delete=models.PROTECT)
+    raca = models.ForeignKey(Raca, on_delete=models.PROTECT)
     sexo = models.CharField(max_length=10, choices=Sexo.choices)
     idade = models.IntegerField(default=0)
     observacao = models.CharField(max_length=200, null=True, blank=True)
