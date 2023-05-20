@@ -1,6 +1,19 @@
 from django.contrib import admin
+from pet.resources import EspecieResource, RacaResource
+from import_export.admin import ImportExportModelAdmin
 
 from pet.models import Especie, Raca
 
-admin.site.register(Especie)
-admin.site.register(Raca)
+
+class EspecieAdmin(ImportExportModelAdmin):
+    resource_classes = [EspecieResource]
+
+
+admin.site.register(Especie, EspecieAdmin)
+
+
+class RacaAdmin(ImportExportModelAdmin):
+    resource_classes = [RacaResource]
+
+
+admin.site.register(Raca, RacaAdmin)
