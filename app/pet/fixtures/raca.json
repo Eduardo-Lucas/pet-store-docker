@@ -1,0 +1,42 @@
+[
+  {
+    "model": "pet.raca",
+    "pk": 5,
+    "fields": {
+      "nome": "Angorá",
+      "especie": 2
+    }
+  },
+  {
+    "model": "pet.raca",
+    "pk": 4,
+    "fields": {
+      "nome": "Siamês",
+      "especie": 2
+    }
+  },
+  {
+    "model": "pet.raca",
+    "pk": 3,
+    "fields": {
+      "nome": "Pequinês",
+      "especie": 1
+    }
+  },
+  {
+    "model": "pet.raca",
+    "pk": 2,
+    "fields": {
+      "nome": "Bull Dog",
+      "especie": 1
+    }
+  },
+  {
+    "model": "pet.raca",
+    "pk": 1,
+    "fields": {
+      "nome": "Pastor Alemão",
+      "especie": 1
+    }
+  }
+]
