@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container mb-3 mt-3">
+      <div class="row">
+        <div class="col-4 mt-3"><h1>Tipos de Exame</h1></div>
+        <div class="col-4 mt-4" >
+            <a href="{% url 'exame_medico:tipo-exame-create' %}"
+            class="btn btn-outline-success"
+          >
+            <i class="fa-solid fa-circle-plus"></i> Adiciona Novo
+          </a>
+        </div>        
+      </div>
+
+  <table
+    class="table table-striped table-bordered table-hover"
+    style="width: 100%"
+  >
+    <thead class="border-bottom font-weight-bold">
+      
+      <tr>
+        <td>Nome</td>
+      </tr>
+    
+    </thead>
+    
+    <tbody>
+      {% for tipo_exame in tipos_exames %}
+
+      <tr>
+        <td>{{ tipo_exame.nome }}</td>
+
+        <td class="text-center">
+          <a
+            href="{% url 'exame_medico:tipo-exame-detail' tipo_exame.id %}"
+            class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Dodgerblue;">
+            <i class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes"></i>
+          </span>
+          </a>
+        </td>
+        <td class="text-center">
+          <a
+            href="{% url 'exame_medico:tipo-exame-update' tipo_exame.id %}"
+            class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Mediumslateblue;">
+            <i class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Atualizar"></i>
+          </span>
+          </a>
+          </td>
+          <td class="text-center">
+          <a
+            href="{% url 'exame_medico:tipo-exame-delete' tipo_exame.id %}"
+              class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Tomato;">
+            <i class="fa-solid fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir"></i>
+          </span>
+          </a>
+          </td>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+    <tfoot class="border-bottom font-weight-bold">
+      <tr>
+        <td>Nome</td>
+
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+{% endblock %}

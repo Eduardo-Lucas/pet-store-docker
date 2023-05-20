@@ -6,13 +6,14 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from pet.models import Pet, Raca
 from pet.forms import PetForm
 
 
-class PetListView(ListView):
+class PetListView(LoginRequiredMixin, ListView):
     model = Pet
     fields = [
         "nome",
@@ -21,7 +22,7 @@ class PetListView(ListView):
     template_name = "pet/pet_list.html"
 
 
-class PetCreateView(CreateView):
+class PetCreateView(LoginRequiredMixin, CreateView):
     model = Pet
     template_name = "pet/pet_form.html"
     form_class = PetForm
@@ -35,23 +36,23 @@ class PetCreateView(CreateView):
         return super(PetCreateView, self).form_valid(form)
 
 
-class PetDetailView(DetailView):
+class PetDetailView(LoginRequiredMixin, DetailView):
     model = Pet
 
 
-class PetUpdateView(UpdateView):
+class PetUpdateView(LoginRequiredMixin, UpdateView):
     model = Pet
     template_name = "pet/pet_form.html"
     form_class = PetForm
 
     success_url = reverse_lazy("users:tutor-home")
 
-class PetDeleteView(DeleteView):
+class PetDeleteView(LoginRequiredMixin, DeleteView):
     model = Pet
     success_url = reverse_lazy("users:tutor-home")
 
 
-class RacaCreateView(CreateView):
+class RacaCreateView(LoginRequiredMixin, CreateView):
     model = Raca
     template_name = "pet/raca_form.html"
     fields = [
@@ -59,5 +60,5 @@ class RacaCreateView(CreateView):
     ]
 
 
-class RacaDetailView(DetailView):
+class RacaDetailView(LoginRequiredMixin, DetailView):
     model = Raca

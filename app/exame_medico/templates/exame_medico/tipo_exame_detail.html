@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% load static %} 
+
+{% block content %}
+
+<div class="container">
+  <h1 class="mt-3">Detalhes da Tipo de Exame</h1>
+
+  <div class="row">
+    <div class="col-md-3 mt-12">Nome: {{object.nome}}</div>
+  </div>
+
+  <div class="col-md-4 mt-1 mb-1">
+    <a
+      href="{% url 'exame_medico:tipo-exame-list' %}"
+      class="btn btn-secondary btn-block btn-lg"
+    >
+      <i class="fas fa-stream"></i> Volta
+    </a>
+  </div>
+</div>
+
+{% endblock %}

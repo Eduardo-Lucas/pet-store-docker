@@ -1,0 +1,51 @@
+[
+  {
+    "model": "exame_medico.tipoexame",
+    "fields": {
+      "id": "fc71d5c0-9b81-447f-b5ae-5d606b89e3b1",
+      "nome": "Exame coproparasitológico (exame de fezes)"
+    }
+  },
+  {
+    "model": "exame_medico.tipoexame",
+    "fields": {
+      "id": "b83d4b1d-9b23-48d2-8213-8ba85cb19b0d",
+      "nome": "Ultrassonografia abdominal"
+    }
+  },
+  {
+    "model": "exame_medico.tipoexame",
+    "fields": {
+      "id": "9f83ae3a-1bf0-4cbd-8f7c-874820a3ad79",
+      "nome": "Eletrocardiograma"
+    }
+  },
+  {
+    "model": "exame_medico.tipoexame",
+    "fields": {
+      "id": "80fa8bae-37a4-45e6-b769-0abb00b3fd7e",
+      "nome": "Exame de urina"
+    }
+  },
+  {
+    "model": "exame_medico.tipoexame",
+    "fields": {
+      "id": "69dae907-f95a-48b5-bdf0-8eae43ab5e74",
+      "nome": "Função hepática"
+    }
+  },
+  {
+    "model": "exame_medico.tipoexame",
+    "fields": {
+      "id": "3088366e-5a05-479b-a9e4-8f786bd8f91c",
+      "nome": "Exame sorológico para FIV e FeLV"
+    }
+  },
+  {
+    "model": "exame_medico.tipoexame",
+    "fields": {
+      "id": "085a2bbc-e516-448a-a4fb-19f7a48f6f07",
+      "nome": "Hemograma"
+    }
+  }
+]

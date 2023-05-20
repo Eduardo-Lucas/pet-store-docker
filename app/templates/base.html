@@ -116,24 +116,14 @@
               {% endif %}
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Espécie</a>
+              <a class="nav-link" href="{% url 'exame_medico:tipo-exame-list' %}">Tipos de Exame</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Raça</a>
+              <a class="nav-link" href="{% url 'exame_medico:exame-medico-list' %}">Exame Médico</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Veterinário</a>
-            </li>
+           
 
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
-              >
-            </li>
+            
           </ul>
           
           </form>
