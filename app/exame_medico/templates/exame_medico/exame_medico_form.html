@@ -1,17 +1,20 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% load static %} {%
-block content %}
+{% extends 'base.html' %} 
+
+{% load crispy_forms_tags %} 
+{% load static %} 
+
+
+{% block content %}
 
 <div class="container border border-dark">
-  <h5 class="mt-4">Exame Médico</h5>
+  <h5 class="mt-4">Marcação do Exame Médico</h5>
   <h6><strong>Dados do Exame Médico</strong></h6>
   <hr />
+  {{ form.media }}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
-    <div class="row">
-      <div class="col-md-4">{{form.veterinario|as_crispy_field}}</div>
-      <div class="col-md-4">{{form.pet|as_crispy_field}}</div>
-    </div>
+    {{ form | crispy }}
+    
 
     <div class="row border border-dark">
       <div class="col-md-8 mt-1 mb-1">

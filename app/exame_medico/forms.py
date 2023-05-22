@@ -1,4 +1,5 @@
 from django import forms
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 from .models import ExameMedico
 
 
@@ -14,3 +15,6 @@ class ExameMedicoForm(forms.ModelForm):
             "valor",
             "diagnostico",
         )
+        widgets = {
+            "data_exame": DatePickerInput(options={"format": "DD/MM/YYYY"}),
+        }

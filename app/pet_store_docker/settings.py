@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "smart_selects",
     "import_export",
+    "bootstrap_datepicker_plus",
 ]
 
 USE_DJANGO_JQUERY = True

@@ -27,25 +27,25 @@ urlpatterns = [
     ###############################################
     # Exame Médico
     ###############################################
-    path("exame-medico-list/", TipoExameListView.as_view(), name="exame-medico-list"),
+    path("exame-medico-list/", ExameMedicoListView.as_view(), name="exame-medico-list"),
     path(
         "exame-medico-create/",
-        TipoExameCreateView.as_view(),
+        ExameMedicoCreateView.as_view(),
         name="exame-medico-create",
     ),
     path(
         "exame-medico-detail/<pk>",
-        TipoExameDetailView.as_view(),
+        ExameMedicoDetailView.as_view(),
         name="exame-medico-detail",
     ),
     path(
         "exame-medico-update/<pk>",
-        TipoExameUpdateView.as_view(),
+        ExameMedicoUpdateView.as_view(),
         name="exame-medico-update",
     ),
     path(
         "exame-medico-delete/<pk>",
-        TipoExameDeleteView.as_view(),
+        ExameMedicoDeleteView.as_view(),
         name="exame-medico-delete",
     ),
 ]
