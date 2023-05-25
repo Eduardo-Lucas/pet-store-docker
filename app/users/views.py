@@ -1,8 +1,10 @@
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
+
 from pet.forms import PetForm
 
 from pet.models import Pet
+from exame_medico.models import ExameMedico
 from .models import User
 from .forms import TutorSignUpForm, VeterinarianSignUpForm, LoginForm
 from django.contrib.auth import login
@@ -76,5 +78,5 @@ def tutor_home(request):
 @login_required
 @veterinarian_required
 def veterinarian_home(request):
-    context = {"questions": "Welcome to Veterinarian's Home"}
+    context = {"exames_medicos": ExameMedico.objects.filter(veterinario=request.user.veterinario)}
     return render(request, "users/veterinarian_home.html", context)

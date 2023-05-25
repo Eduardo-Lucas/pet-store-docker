@@ -1,12 +1,86 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% load static %} 
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
+<div class="container mb-3 mt-3">
+      <div class="row d-flex align-items-center">
+        <div class="col-4 mt-3"><h1>Exame Médico</h1></div>
+        <div class="col-4 mt-4" >
+            <a href="{% url 'exame_medico:exame-medico-create' %}"
+            class="btn btn-outline-success"
+          >
+            <i class="fa-solid fa-circle-plus"></i> Adiciona Novo
+          </a>
+        </div>   
+        <div class="col-4 mt-3">
+            <h1>Veterinário: {{ request.user.veterinario }}</h1> 
+         </div>     
+      </div>
 
-    <h1>Bem-vindo a Página Inicial do Veterinário</h1>
-    {% comment %} <a href="{% url 'create-question' %}"><button>Create Question</button></a>
-    <ul>
-    {% for ques in questions %}
-        <li>{{ ques.question|truncatewords:20 }} - <a href="{% url 'teacher-question-detail' ques.id %}">Read More</a></li>
-    {% endfor %}
-    </ul> {% endcomment %}
+  <table
+    class="table table-striped table-bordered table-hover"
+    style="width: 100%"
+  >
+    <thead class="border-bottom font-weight-bold">
+      
+      <tr>
+        <td>Data do Exame</td>
+        <td>Pet</td>
+        <td>Tipo de Exame</td>
+      </tr>
+    
+    </thead>
+    
+    <tbody>
+      {% for exame_medico in exames_medicos %}
+
+      <tr>
+        <td>{{ exame_medico.data_exame|date:"d/m/Y" }}</td>
+        <td>{{ exame_medico.pet }}</td>
+        <td>{{ exame_medico.tipo_exame }}</td>
+
+        <td class="text-center">
+          <a
+            href="{% url 'exame_medico:exame-medico-detail' exame_medico.id %}"
+            class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Dodgerblue;">
+            <i class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes"></i>
+          </span>
+          </a>
+        </td>
+        <td class="text-center">
+          <a
+            href="{% url 'exame_medico:exame-medico-update' exame_medico.id %}"
+            class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Mediumslateblue;">
+            <i class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Atualizar"></i>
+          </span>
+          </a>
+          </td>
+          <td class="text-center">
+          <a
+            href="{% url 'exame_medico:exame-medico-delete' exame_medico.id %}"
+              class="btn text-secondary px-0"
+          >
+          <span style="font-size: 1em; color: Tomato;">
+            <i class="fa-solid fa-trash" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir"></i>
+          </span>
+          </a>
+          </td>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+    <tfoot class="border-bottom font-weight-bold">
+      <tr>
+        <td>Data do Exame</td>
+        <td>Pet</td>
+        <td>Tipo de Exame</td>
+
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
 {% endblock %}

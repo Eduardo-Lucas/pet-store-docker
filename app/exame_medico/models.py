@@ -36,7 +36,7 @@ class ExameMedico(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.PROTECT)
     tipo_exame = models.ForeignKey(TipoExame, on_delete=models.PROTECT)
     # Imagens (máximo de 10)
-    diagnostico = models.TextField(max_length=500)
+    diagnostico = models.TextField(max_length=500, null=True, blank=True)
     data_exame = models.DateField()
     forma_pagamento = models.CharField(
         max_length=8, choices=FORMA_PAGAMENTO_CHOICES, default="Cartão"
