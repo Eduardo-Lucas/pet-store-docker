@@ -1,16 +1,51 @@
 # import the required libraries
 import uuid
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils import timezone
 from django.urls import reverse
 from core.choices import UnidadeFederativa
 
 
+class CustomUserManager(BaseUserManager):
+    def _create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("Email deve ser informado.")
+        if not password:
+            raise ValueError("Senha deve ser informada.")
+
+        user = self.model(email=self.normalize_email(email), **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email, password, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_active", True)
+        extra_fields.setdefault("is_superuser", False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_active", True)
+        extra_fields.setdefault("is_superuser", True)
+        return self._create_user(email, password, **extra_fields)
+
+
 class User(AbstractUser):
     email = models.EmailField(unique=True)
+
+    is_staff = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
+
     is_veterinarian = models.BooleanField(default=False)
     is_tutor = models.BooleanField(default=False)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
 
     def __str__(self) -> str:
         return self.email
@@ -40,7 +75,6 @@ class Veterinario(models.Model):
 
     def __str__(self) -> str:
         return self.nome
-
 
 
 class Tutor(models.Model):
