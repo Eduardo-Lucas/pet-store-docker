@@ -35,23 +35,22 @@ from core.choices import UnidadeFederativa
 
 class User(AbstractUser):
     class Role(models.TextChoices):
-        ADMIN = "ADMIN", 'Admin'
-        TUTOR = "TUTOR", 'Tutor'
-        VETERINÁRIO = "VETERINÁRIO", 'Veterinário'
-    
+        ADMIN = "ADMIN", "Admin"
+        TUTOR = "TUTOR", "Tutor"
+        VETERINÁRIO = "VETERINÁRIO", "Veterinário"
+
     base_role = Role.ADMIN
 
     role = models.CharField(max_length=50, choices=Role.choices)
-    
+
     email = models.EmailField(unique=True)
 
-    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self) -> str:
         return self.email
-    
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.role = self.base_role
@@ -66,18 +65,16 @@ class VeterinarioManager(BaseUserManager):
         results = super().get_queryset(*args, **kwargs)
         return results.filter(role=User.Role.VETERINÁRIO)
 
+
 class Veterinario(User):
-    id = models.UUIDField(
-        primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
-    )
-    
     base_role = User.Role.VETERINÁRIO
 
     nome = models.CharField(max_length=100)
     nome_clinica = models.CharField(max_length=100, null=True, blank=True)
     celular = models.CharField(max_length=14, null=True, blank=True)
-    
+
     veterinario = VeterinarioManager()
+
     class Meta:
         proxy = True
         db_table = "veterinarios"
@@ -86,18 +83,15 @@ class Veterinario(User):
         return self.nome
 
 
-
 class TutorManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         results = super().get_queryset(*args, **kwargs)
         return results.filter(role=User.Role.TUTOR)
 
+
 class Tutor(User):
-    id = models.UUIDField(
-        primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
-    )
-    
     base_role = User.Role.TUTOR
+
     nome = models.CharField(max_length=100)
     celular = models.CharField(max_length=14, null=True, blank=True)
     cpf = models.CharField(max_length=14, null=True, blank=True)

@@ -69,14 +69,16 @@ class LogoutView(auth_views.LogoutView):
 @login_required
 @tutor_required
 def tutor_home(request):
-    context = {
-        "pets": Pet.objects.filter(tutor=request.user.tutor).order_by('nome')
-    }
+    context = {"pets": Pet.objects.filter(tutor=request.user.tutor).order_by("nome")}
     return render(request, "users/tutor_home.html", context)
 
 
 @login_required
 @veterinarian_required
 def veterinarian_home(request):
-    context = {"exames_medicos": ExameMedico.objects.filter(veterinario=request.user.veterinario)}
+    context = {
+        "exames_medicos": ExameMedico.objects.filter(
+            veterinario=request.user.veterinario
+        )
+    }
     return render(request, "users/veterinarian_home.html", context)

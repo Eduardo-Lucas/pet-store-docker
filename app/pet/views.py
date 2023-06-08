@@ -27,7 +27,7 @@ class PetCreateView(LoginRequiredMixin, CreateView):
     template_name = "pet/pet_form.html"
     form_class = PetForm
 
-    success_url = reverse_lazy('users:tutor-home')
+    success_url = reverse_lazy("users:tutor-home")
 
     def form_valid(self, form):
         pet = form.save(commit=False)
@@ -46,6 +46,7 @@ class PetUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PetForm
 
     success_url = reverse_lazy("users:tutor-home")
+
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     model = Pet

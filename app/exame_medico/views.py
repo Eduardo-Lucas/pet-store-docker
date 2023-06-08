@@ -53,6 +53,7 @@ class TipoExameDeleteView(LoginRequiredMixin, DeleteView):
 
     success_url = reverse_lazy("users:veterinarian-home")
 
+
 class ExameMedicoListView(LoginRequiredMixin, ListView):
     model = ExameMedico
     context_object_name = "exames_medicos"
