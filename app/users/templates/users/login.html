@@ -4,7 +4,15 @@
 
 <h1>Login</h1>
 <form action="{% url 'users:login' %}" method="POST">
-  {% csrf_token %} {{ form.as_p }}
+  {% csrf_token %}
+
+  <div class="row">
+    <div class="col-md-3">{{form.email|as_crispy_field}}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">{{form.password|as_crispy_field}}</div>
+  </div>
+
   <input type="submit" value="Login" />
 </form>
 <p>Não é registrado ainda!</p>

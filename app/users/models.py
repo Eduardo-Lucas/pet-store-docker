@@ -2,92 +2,102 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db.models.query import QuerySet
 from django.utils import timezone
 from django.urls import reverse
 from core.choices import UnidadeFederativa
 
 
-class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError("Email deve ser informado.")
-        if not password:
-            raise ValueError("Senha deve ser informada.")
+# class CustomUserManager(BaseUserManager):
+#     def _create_user(self, email, password=None, **extra_fields):
+#         if not email:
+#             raise ValueError("Email deve ser informado.")
+#         if not password:
+#             raise ValueError("Senha deve ser informada.")
 
-        user = self.model(email=self.normalize_email(email), **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+#         user = self.model(email=self.normalize_email(email), **extra_fields)
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
 
-    def create_user(self, email, password, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_active", True)
-        extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password, **extra_fields)
+#     def create_user(self, email, password, **extra_fields):
+#         extra_fields.setdefault("is_staff", True)
+#         extra_fields.setdefault("is_active", True)
+#         extra_fields.setdefault("is_superuser", False)
+#         return self._create_user(email, password, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_active", True)
-        extra_fields.setdefault("is_superuser", True)
-        return self._create_user(email, password, **extra_fields)
+#     def create_superuser(self, email, password, **extra_fields):
+#         extra_fields.setdefault("is_staff", True)
+#         extra_fields.setdefault("is_active", True)
+#         extra_fields.setdefault("is_superuser", True)
+#         return self._create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
+    class Role(models.TextChoices):
+        ADMIN = "ADMIN", 'Admin'
+        TUTOR = "TUTOR", 'Tutor'
+        VETERINÁRIO = "VETERINÁRIO", 'Veterinário'
+    
+    base_role = Role.ADMIN
+
+    role = models.CharField(max_length=50, choices=Role.choices)
+    
     email = models.EmailField(unique=True)
 
-    is_staff = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
-
-    is_veterinarian = models.BooleanField(default=False)
-    is_tutor = models.BooleanField(default=False)
-
+    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
-
     def __str__(self) -> str:
         return self.email
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.role = self.base_role
+            return self.save(*args, **kwargs)
 
     class Meta:
         db_table = "users"
 
 
-class Veterinario(models.Model):
+class VeterinarioManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.VETERINÁRIO)
+
+class Veterinario(User):
     id = models.UUIDField(
         primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
     )
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        primary_key=False,
-        unique=True,
-        related_name="veterinario",
-    )
+    
+    base_role = User.Role.VETERINÁRIO
+
     nome = models.CharField(max_length=100)
     nome_clinica = models.CharField(max_length=100, null=True, blank=True)
     celular = models.CharField(max_length=14, null=True, blank=True)
-    created_at = models.DateTimeField(default=timezone.now)
-
+    
+    veterinario = VeterinarioManager()
     class Meta:
+        proxy = True
         db_table = "veterinarios"
 
     def __str__(self) -> str:
         return self.nome
 
 
-class Tutor(models.Model):
+
+class TutorManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.TUTOR)
+
+class Tutor(User):
     id = models.UUIDField(
         primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
     )
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        primary_key=False,
-        unique=True,
-        related_name="tutor",
-    )
+    
+    base_role = User.Role.TUTOR
     nome = models.CharField(max_length=100)
     celular = models.CharField(max_length=14, null=True, blank=True)
     cpf = models.CharField(max_length=14, null=True, blank=True)
@@ -107,7 +117,10 @@ class Tutor(models.Model):
     observacao = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
 
+    tutor = TutorManager()
+
     class Meta:
+        proxy = True
         db_table = "tutores"
 
     def __str__(self) -> str:
