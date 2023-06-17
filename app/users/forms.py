@@ -16,23 +16,21 @@ class TutorSignUpForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())
 
-    nome = forms.CharField(widget=forms.TextInput())
 
     class Meta(UserCreationForm.Meta):
-        model = User
+        model = Tutor
         fields = ("email", "password1", "password2")
 
     @transaction.atomic
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_tutor = True
+        tutor = super().save(commit=False)
         if commit:
-            user.save()
+            tutor.save()
         tutor = Tutor.objects.create(
-            user=user,
+            tutor=tutor,
             nome=self.cleaned_data.get("nome"),
         )
-        return user
+        return tutor
 
 
 class VeterinarianSignUpForm(UserCreationForm):
@@ -44,21 +42,20 @@ class VeterinarianSignUpForm(UserCreationForm):
     nome_clinica = forms.CharField(widget=forms.TextInput())
 
     class Meta(UserCreationForm.Meta):
-        model = User
+        model = Veterinario
         fields = ("email", "password1", "password2")
 
     @transaction.atomic
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_veterinarian = True
+        veterinario = super().save(commit=False)
         if commit:
-            user.save()
+            veterinario.save()
         veterinario = Veterinario.objects.create(
-            user=user,
+            veterinario=veterinario,
             nome=self.cleaned_data.get("nome"),
             nome_clinica=self.cleaned_data.get("nome_clinica"),
         )
-        return user
+        return veterinario
 
 
 class LoginForm(AuthenticationForm):
