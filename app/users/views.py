@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+""" from django.shortcuts import redirect, render
 from django.views.generic import CreateView
 
 from pet.forms import PetForm
@@ -24,8 +24,8 @@ class TutorSignUpView(CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
+        tutor = form.save()
+        login(self.request, tutor)
         return redirect("users:tutor-home")
 
 
@@ -82,3 +82,4 @@ def veterinarian_home(request):
         )
     }
     return render(request, "users/veterinarian_home.html", context)
+ """

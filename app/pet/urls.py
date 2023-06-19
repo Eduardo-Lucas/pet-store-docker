@@ -1,4 +1,4 @@
-from django.urls import path
+""" from django.urls import path
 from .views import *
 
 app_name = "pet"
@@ -12,3 +12,4 @@ urlpatterns = [
     path("raca_create/", RacaCreateView.as_view(), name="raca_create"),
     path("raca_detail/<pk>", RacaDetailView.as_view(), name="raca_detail"),
 ]
+ """
