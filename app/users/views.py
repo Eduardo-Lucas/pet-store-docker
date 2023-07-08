@@ -23,8 +23,8 @@ class TutorSignUpView(CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
-        tutor = form.save()
-        login(self.request, tutor)
+        user = form.save()
+        login(self.request, user)
         return redirect("users:tutor-home")
 
 
@@ -68,16 +68,16 @@ class LogoutView(auth_views.LogoutView):
 @login_required
 @tutor_required
 def tutor_home(request):
-    context = {"pets": Pet.objects.filter(tutor=request.user.tutor).order_by("nome")}
-    return render(request, "users/tutor_home.html", context)
+    # context = {"pets": Pet.objects.filter(tutor=request.user.tutor).order_by("nome")}
+    return render(request, "users/tutor_home.html", {})
 
 
 @login_required
 @veterinario_required
 def veterinarian_home(request):
-    context = {
-        "exames_medicos": ExameMedico.objects.filter(
-            veterinario=request.user.veterinario
-        )
-    }
-    return render(request, "users/veterinarian_home.html", context)
+    # context = {
+    #     "exames_medicos": ExameMedico.objects.filter(
+    #         veterinario=request.user.veterinario
+    #     )
+    # }
+    return render(request, "users/veterinarian_home.html", {})

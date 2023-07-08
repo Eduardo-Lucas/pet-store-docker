@@ -30,7 +30,7 @@ class TutorSignUpForm(UserCreationForm):
         tutor = Tutor.objects.create(
             user=user,
         )
-        return tutor
+        return user
 
 
 # 2
