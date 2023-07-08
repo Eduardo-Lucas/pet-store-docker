@@ -1,4 +1,4 @@
-""" from django.shortcuts import render
+from django.shortcuts import render
 from django.views.generic import (
     ListView,
     DetailView,
@@ -63,4 +63,3 @@ class RacaCreateView(LoginRequiredMixin, CreateView):
 
 class RacaDetailView(LoginRequiredMixin, DetailView):
     model = Raca
- """

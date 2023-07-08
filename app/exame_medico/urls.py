@@ -1,4 +1,4 @@
-""" from django.urls import path
+from django.urls import path
 from .views import *
 
 app_name = "exame_medico"
@@ -49,4 +49,3 @@ urlpatterns = [
         name="exame-medico-delete",
     ),
 ]
- """

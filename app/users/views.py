@@ -1,7 +1,6 @@
-""" from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render
 from django.views.generic import CreateView
 
-from pet.forms import PetForm
 
 from pet.models import Pet
 from exame_medico.models import ExameMedico
@@ -11,7 +10,7 @@ from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .decorators import tutor_required, veterinarian_required
+from .decorators import tutor_required, veterinario_required
 
 
 class TutorSignUpView(CreateView):
@@ -56,7 +55,7 @@ class LoginView(auth_views.LoginView):
         if user.is_authenticated:
             if user.is_tutor:
                 return reverse("users:tutor-home")
-            elif user.is_veterinarian:
+            elif user.is_veterinario:
                 return reverse("users:veterinarian-home")
         else:
             return reverse("users:login")
@@ -74,7 +73,7 @@ def tutor_home(request):
 
 
 @login_required
-@veterinarian_required
+@veterinario_required
 def veterinarian_home(request):
     context = {
         "exames_medicos": ExameMedico.objects.filter(
@@ -82,4 +81,3 @@ def veterinarian_home(request):
         )
     }
     return render(request, "users/veterinarian_home.html", context)
- """
