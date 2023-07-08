@@ -28,7 +28,7 @@ class TutorSignUpForm(UserCreationForm):
         if commit:
             user.save()
         tutor = Tutor.objects.create(
-            use=user,
+            user=user,
         )
         return tutor
 

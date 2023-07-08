@@ -4,7 +4,7 @@
   <div class="row">
     <h2 class="mt-5">Welcome to the Pet Store Docker</h2>
     {% if user.is_authenticated %}
-    <h2>Logado!</h2>
+    <h2>Bem-vindo: {{user.email}}</h2>
     {% else %}
     <h2>Não Logado!</h2>
     {% endif %}
