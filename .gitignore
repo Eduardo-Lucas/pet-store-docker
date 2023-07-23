@@ -14,3 +14,11 @@ app/pet_store_docker/__pycache__/settings.cpython-311.pyc
 app/pet_store_docker/__pycache__/urls.cpython-311.pyc
 app/pet_store_docker/__pycache__/settings.cpython-311.pyc
 app/pet_store_docker/__pycache__/urls.cpython-311.pyc
+app/core/__pycache__
+app/core/migrations/__pycache__
+app/exame_medico/__pycache__
+app/exame_medico/migrations/__pycache__
+app/pet_store_docker/__pycache__
+*/__pycache__
+app/users/__pycache__
+app/users/migrations/__pycache__

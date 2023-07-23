@@ -4,7 +4,10 @@
   <div class="row">
     <h2 class="mt-5">Welcome to the Pet Store Docker</h2>
     {% if user.is_authenticated %}
-    <h2>Bem-vindo: {{user.email}}</h2>
+    <h2>
+      Bem-vindo: {{user.email}} É Tutor? {{user.is_tutor}} É Veterinário?
+      {{user.is_veterinario}}
+    </h2>
     {% else %}
     <h2>Não Logado!</h2>
     {% endif %}
