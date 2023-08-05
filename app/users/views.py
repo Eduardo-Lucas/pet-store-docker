@@ -6,11 +6,13 @@ from pet.models import Pet
 from exame_medico.models import ExameMedico
 from .models import User
 from .forms import TutorSignUpForm, VeterinarianSignUpForm, LoginForm
-from django.contrib.auth import login
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .decorators import tutor_required, veterinario_required
+from django.contrib import messages
+from django.views.generic import View
 
 
 class TutorSignUpView(CreateView):
@@ -28,7 +30,7 @@ class TutorSignUpView(CreateView):
         return redirect("users:tutor-home")
 
 
-class VeterinarianSignUpView(CreateView):
+class VeterinarianSignUpView(View):
     model = User
     form_class = VeterinarianSignUpForm
     template_name = "users/veterinarian_signup.html"
@@ -43,25 +45,36 @@ class VeterinarianSignUpView(CreateView):
         return redirect("users:veterinarian-home")
 
 
-class LoginView(auth_views.LoginView):
+class LoginView(View):
     form_class = LoginForm
     template_name = "users/login.html"
 
-    def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
+    def get(self, request):
+        form = self.form_class()
+        message = ""
+        return render(
+            request, self.template_name, context={"form": form, "message": message}
+        )
 
-    def get_success_url(self):
-        user = self.request.user
-        if user.is_authenticated:
-            if user.is_tutor:
-                return reverse("users:tutor-home")
-            elif user.is_veterinario:
-                return reverse("users:veterinarian-home")
-        else:
-            return reverse("users:login")
+    def post(self, request):
+        form = self.form_class(request.POST)
+        message = ""
+        if form.is_valid():
+            user = authenticate(
+                username=form.cleaned_data["username"],
+                password=form.cleaned_data["password"],
+            )
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            else:
+                message = "Invalid username or password"
+        return render(
+            request, self.template_name, context={"form": form, "message": message}
+        )
 
 
-class LogoutView(auth_views.LogoutView):
+class LogoutView(LogoutView):
     template_name = "users/logout.html"
 
 
