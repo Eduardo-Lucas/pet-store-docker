@@ -62,14 +62,17 @@ class LoginView(View):
         print("PASSWORD: ", password)
 
         user = authenticate(request, username=username, password=password)
-        print("USER: ", user)
+        messages.success(request, "Authenticated successfully")
         if user is not None:
             login(request, user)
-
+            messages.info(request, "Redirected to Home page")
             if user.is_tutor:
                 return redirect("users:tutor-home")
             elif user.is_veterinario:
                 return redirect("users:veterinarian-home")
+            
+            messages.success(request,"")
+            messages.info(request,"")
 
         else:
             messages.error(request, "Invalid username or password")
