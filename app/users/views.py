@@ -55,23 +55,23 @@ class LoginView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
-        
-        if form.is_valid():
-            user = authenticate(self.request,
-                email=form.cleaned_data["email"],
-                password=form.cleaned_data["password"],
-            )
-            messages.info("Authenticated: ", user.is_authenticated)
-            if user is not None:
-                login(request, user)
 
-                if user.is_tutor:
-                    return redirect("users:tutor-home")
-                elif user.is_veterinario:
-                    return redirect("users:veterinarian-home")
+        username = request.POST["username"]
+        print("USERNAME: ", username)
+        password = request.POST["password"]
+        print("PASSWORD: ", password)
+
+        user = authenticate(request, username=username, password=password)
+        print("USER: ", user)
+        if user is not None:
+            login(request, user)
+
+            if user.is_tutor:
+                return redirect("users:tutor-home")
+            elif user.is_veterinario:
+                return redirect("users:veterinarian-home")
 
         else:
-
             messages.error(request, "Invalid username or password")
 
         return render(request, self.template_name, context={"form": form})
