@@ -2,24 +2,29 @@
 
 {% block content %}
 
-<div class="container"> 
-
+<div class="container">
   <h1>Login</h1>
-    <form action="{% url 'users:login' %}" method="POST">
+  <form action="{% url 'users:login' %}" method="POST">
     {% csrf_token %}
 
     <div class="row">
       <div class="col-md-3">{{form.username|as_crispy_field}}</div>
     </div>
     <div class="row">
-      <div class="col-md-3">{{form.password|as_crispy_field}}</div>
+      <div class="col-md-3" id="code">{{form.password|as_crispy_field}}</div>
     </div>
 
-    <input type="submit" value="Login" />
+    <button onclick="checkCodeStrength()">Login</button>
+
+    <p id="lengthMessage" style="color: red"></p>
+    <p id="lowercaseMessage" style="color: red"></p>
+    <p id="uppercaseMessage" style="color: red"></p>
+    <p id="specialCharMessage" style="color: red"></p>
   </form>
   <p>Não é registrado ainda?</p>
   <a href="{% url 'users:tutor-signup' %}">Registre-se como Tutor</a><br />
-  <a href="{% url 'users:veterinarian-signup' %}">Registre-se como Veterinário</a>
-
+  <a href="{% url 'users:veterinarian-signup' %}"
+    >Registre-se como Veterinário</a
+  >
 </div>
 {% endblock %}
