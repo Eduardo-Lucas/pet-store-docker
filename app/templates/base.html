@@ -91,7 +91,7 @@
     <link href="navbar-top-fixed.css" rel="stylesheet" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-5">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark mb-10">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Pet Store</a>
         <button
@@ -132,14 +132,10 @@
         </div>
       </div>
     </nav>
-    <br>
-    <br>
+    
     <div class="container">
-      
-      
-      <div>
+        {% include 'messages.html' %}
         {% block content %} {% endblock %}
-      </div>
 
     </div>
 

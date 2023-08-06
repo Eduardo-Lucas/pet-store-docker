@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .decorators import tutor_required, veterinario_required
 from django.contrib import messages
-from django.views.generic import View
+from django.views import View
 
 
 class TutorSignUpView(CreateView):
@@ -48,21 +48,17 @@ class VeterinarianSignUpView(View):
 class LoginView(View):
     form_class = LoginForm
     template_name = "users/login.html"
-    message = ""
 
     def get(self, request):
         form = self.form_class()
-        message = "GET - Tela de login"
-        return render(
-            request, self.template_name, context={"form": form, "message": self.message}
-        )
+        return render(request, self.template_name, context={"form": form})
 
     def post(self, request):
-        message = "POST - Tela de login"
         form = self.form_class(request.POST)
+        
         if form.is_valid():
-            user = authenticate(
-                username=form.cleaned_data["email"],
+            user = authenticate(self.request,
+                email=form.cleaned_data["email"],
                 password=form.cleaned_data["password"],
             )
             messages.info("Authenticated: ", user.is_authenticated)
@@ -73,13 +69,12 @@ class LoginView(View):
                     return redirect("users:tutor-home")
                 elif user.is_veterinario:
                     return redirect("users:veterinarian-home")
-            
+
         else:
+
             messages.error(request, "Invalid username or password")
 
-        return render(
-            request, self.template_name, context={"form": form, "message": self.message}
-        )
+        return render(request, self.template_name, context={"form": form})
 
 
 class LogoutView(LogoutView):
