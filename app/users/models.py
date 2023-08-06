@@ -14,7 +14,7 @@ class User(AbstractUser):
 
 
 class Tutor(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User,
         related_name="tutors",
         on_delete=models.CASCADE,
@@ -41,7 +41,7 @@ class Tutor(models.Model):
 
 
 class Veterinario(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User,
         related_name="veterinarios",
         on_delete=models.CASCADE,

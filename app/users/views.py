@@ -48,29 +48,37 @@ class VeterinarianSignUpView(View):
 class LoginView(View):
     form_class = LoginForm
     template_name = "users/login.html"
+    message = ""
 
     def get(self, request):
         form = self.form_class()
-        message = ""
+        message = "GET - Tela de login"
         return render(
-            request, self.template_name, context={"form": form, "message": message}
+            request, self.template_name, context={"form": form, "message": self.message}
         )
 
     def post(self, request):
+        message = "POST - Tela de login"
         form = self.form_class(request.POST)
-        message = ""
         if form.is_valid():
             user = authenticate(
-                username=form.cleaned_data["username"],
+                username=form.cleaned_data["email"],
                 password=form.cleaned_data["password"],
             )
+            messages.info("Authenticated: ", user.is_authenticated)
             if user is not None:
                 login(request, user)
-                return redirect("home")
-            else:
-                message = "Invalid username or password"
+
+                if user.is_tutor:
+                    return reverse("users:tutor-home")
+                elif user.is_veterinario:
+                    return reverse("users:veterinarian-home")
+            
+        else:
+            messages.error(request, "Invalid username or password")
+
         return render(
-            request, self.template_name, context={"form": form, "message": message}
+            request, self.template_name, context={"form": form, "message": self.message}
         )
 
 

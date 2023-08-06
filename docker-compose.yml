@@ -11,6 +11,7 @@ services:
       - ./app/:/usr/src/app/
     ports:
       - 8010:8010
+      - 5676:5678
     env_file:
       - ./.env.dev
     depends_on:
