@@ -70,9 +70,9 @@ class LoginView(View):
                 login(request, user)
 
                 if user.is_tutor:
-                    return reverse("users:tutor-home")
+                    return redirect("users:tutor-home")
                 elif user.is_veterinario:
-                    return reverse("users:veterinarian-home")
+                    return redirect("users:veterinarian-home")
             
         else:
             messages.error(request, "Invalid username or password")
