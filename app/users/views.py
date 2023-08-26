@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .decorators import tutor_required, veterinario_required
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 
 
@@ -19,6 +20,7 @@ class TutorSignUpView(CreateView):
     model = User
     form_class = TutorSignUpForm
     template_name = "users/tutor_signup.html"
+    success_message = "User logged!"
 
     def get_context_data(self, **kwargs):
         kwargs["user_type"] = "tutor"
@@ -45,7 +47,7 @@ class VeterinarianSignUpView(View):
         return redirect("users:veterinarian-home")
 
 
-class LoginView(View):
+class LoginView(SuccessMessageMixin, View):
     form_class = LoginForm
     template_name = "users/login.html"
 
@@ -53,29 +55,27 @@ class LoginView(View):
         form = self.form_class()
         return render(request, self.template_name, context={"form": form})
 
+    def get_success_message(self, cleaned_data):
+        return "Welcome!"
+
     def post(self, request):
         form = self.form_class(request.POST)
 
         username = request.POST["username"]
-        print("USERNAME: ", username)
         password = request.POST["password"]
-        print("PASSWORD: ", password)
 
         user = authenticate(request, username=username, password=password)
-        messages.success(request, "Authenticated successfully")
+
         if user is not None:
             login(request, user)
-            messages.info(request, "Redirected to Home page")
+
             if user.is_tutor:
                 return redirect("users:tutor-home")
             elif user.is_veterinario:
                 return redirect("users:veterinarian-home")
-            
-            messages.success(request,"")
-            messages.info(request,"")
 
         else:
-            messages.error(request, "Invalid username or password")
+            messages.error(request, "Invalid username or password", fail_silently=True)
 
         return render(request, self.template_name, context={"form": form})
 
